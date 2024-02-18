@@ -5,7 +5,7 @@ from aiogram.filters import CommandStart, StateFilter
 
 from Config.config import allowed_admin_ids
 from Keyboards.start_admin_kb import kb_start_admin
-from Keyboards.start_user_kb import kb_start_user
+from Keyboards.start_user_kb import start_user_menu, user_after_menu
 
 start_command_router = Router()
 
@@ -21,40 +21,9 @@ async def process_start_command(message: Message, bot: Bot):
         await bot.send_message(message.from_user.id,
                                text=f'👋 Приветствую тебя {message.from_user.username} в SMS_BOT.\n\n'
                                     f'🛒 Приятных покупок!\n\n'
-                                    f'🧐 Если возникнут вопросы обращайтесь в поддержку', reply_markup=kb_start_user)
+                                    f'🧐 Если возникнут вопросы обращайтесь в поддержку', reply_markup=start_user_menu)
 
 
-@start_command_router.message(F.text == '📊 Статистика')
-async def press_statistics(message: Message, bot: Bot):
-    await bot.send_message(message.from_user.id,
-                           text='Сбор статистики')
-
-
-@start_command_router.message(F.text == '📤 Рассылка')
-async def press_mailing(message: Message, bot: Bot):
-    await bot.send_message(message.from_user.id,
-                           text='Произвожу рассылку')
-
-
-@start_command_router.message(F.text == '💵 Настройка наценки')
-async def press_margin(message: Message, bot: Bot):
-    await bot.send_message(message.from_user.id,
-                           text='Укажите % наценки')
-
-
-@start_command_router.message(F.text == '⌨ Рекламные кнопки')
-async def press_advertising(message: Message, bot: Bot):
-    await bot.send_message(message.from_user.id,
-                           text='Настраиваем рекламные кнопки')
-
-
-@start_command_router.message(F.text == '🔍 Поиск пользователя')
-async def press_search_user(message: Message, bot: Bot):
-    await bot.send_message(message.from_user.id,
-                           text='Введите id пользователя')
-
-
-@start_command_router.message(F.text == '🎁 Создание промокода')
-async def press_create_promo(message: Message, bot: Bot):
-    await bot.send_message(message.from_user.id,
-                           text='Создаю промокод')
+@start_command_router.message(F.text == '🏠 Меню')
+async def press_balance(message: Message, bot: Bot):
+    await bot.send_message(message.from_user.id, text='⬇ Выберете действие ⬇', reply_markup=user_after_menu)

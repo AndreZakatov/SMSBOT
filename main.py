@@ -10,6 +10,7 @@ from aiogram.types import BotCommand, Message
 
 from Config.config import Config, load_config
 from Handlers.start_handler import start_command_router
+from Handlers.admin_commands import admin_command_router
 
 # Инициализация логирования
 logging.basicConfig(level=logging.INFO)
@@ -40,6 +41,7 @@ async def main():
 
     # Команда старт
     dp.include_router(start_command_router)
+    
 
     # Запуск бесконечного цикла обработки событий
     await dp.start_polling(bot)
