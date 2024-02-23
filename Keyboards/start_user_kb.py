@@ -29,4 +29,4 @@ user_after_menu = InlineKeyboardMarkup(inline_keyboard=[[b_buy_number, b_repleni
 b_menu = KeyboardButton(text='🏠 Меню')
 b_info = KeyboardButton(text='ℹ Инфо')
 
-start_user_menu = ReplyKeyboardMarkup(keyboard=[[b_menu, b_info]], one_time_keyboard=True)
+start_user_menu = ReplyKeyboardMarkup(keyboard=[[b_menu, b_info]], one_time_keyboard=True, resize_keyboard=True)

@@ -9,5 +9,5 @@ b_create_promo = KeyboardButton(text='🎁 Создание промокода')
 
 kb_start_admin = ReplyKeyboardMarkup(keyboard=[[b_statistika, b_mailing],
                                                [b_setting_up_the_margin, b_advertising_buttons],
-                                               [b_search_user, b_create_promo]])
+                                               [b_search_user, b_create_promo]], resize_keyboard=True, one_time_keyboard=True)
 
