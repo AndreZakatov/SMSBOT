@@ -1,33 +1,48 @@
 import requests
 
-API_KEY = "208493U8da1100128d7f6fc6df5caa19c375224"
-SERVICE = input('Сервис: ')
-OPERATOR = input('Оператор: ')
-COUNTRY = input('Страна: ')
-MAXPRICE = input('Цена: ')
+API_KEY = '208493Ub764004feff56815610891d0d5717678'
+COUNTRY = ''
+OPERATOR = ''
+SERVICE = ''
+MAXPRICE = int()
+STATUS_CODE = int()
+ID = ''
 
-url = f'https://smshub.org/stubs/handler_api.php?api_key={API_KEY}&action=getNumbersStatus&country={COUNTRY}&operator={OPERATOR}'
+# Обязательный параметр API_KEY
+get_number_status = f'https://smshub.org/stubs/handler_api.php?api_key={API_KEY}&action=getNumbersStatus&' \
+                    f'country={COUNTRY}&operator={OPERATOR}'
 
+# Обязательный параметр API_KEY
+url = f'https://smshub.org/stubs/handler_api.php?api_key={API_KEY}&action=getNumbersStatus&' \
+      f'country={COUNTRY}&operator={OPERATOR}'
 
-response = requests.get(url)
+# Обязательный параметр API_KEY
+get_balance = f'https://smshub.org/stubs/handler_api.php?api_key={API_KEY}&action=getBalance'
 
-# Обработка ответа
-if response.status_code == 200:
-    result = response.text
-    if result == "NO_NUMBERS":
-        print("Нет доступных номеров. Попробуйте позже или измените параметры.")
-    elif result == "NO_BALANCE":
-        print("Закончились деньги на API-ключе.")
-    elif result == "API_KEY_NOT_VALID":
-        print("Невалидный статус API-ключа.")
-    elif result == "WRONG_SERVICE":
-        print("Неверный идентификатор сервиса.")
-    elif result.startswith("ACCESS_NUMBER"):
-        # Разбор ответа в случае успешной покупки номера
-        activation_info = result.split(":")
-        activation_id = activation_info[1]
-        phone_number = activation_info[2]
-        print(f"Получен номер {phone_number} с ID активации {activation_id}.")
-else:
-    print(f"Ошибка при выполнении запроса. Код ответа: {response.status_code}")
+# Обязательный параметр API_KEY, SERVICE,
+get_number = f'https://smshub.org/stubs/handler_api.php?api_key={API_KEY}' \
+             f'&action=getNumber' \
+             f'&service={SERVICE}' \
+             f'&operator={OPERATOR}' \
+             f'&country={COUNTRY}' \
+             f'&maxPrice={MAXPRICE}'
+
+# Изменить статус, все параметры обязательны
+set_status = f'https://smshub.org/stubs/handler_api.php?api_key={API_KEY}&' \
+                f'action=setStatus&status={STATUS_CODE}&id={ID}'
+
+# Получить статус, все поля обязательные
+get_status = f'https://smshub.org/stubs/handler_api.php?api_key={API_KEY}&action=getStatus&id={ID}'
+
+# Получение списка цен
+get_price = f'https://smshub.org/stubs/handler_api.php?api_key={API_KEY}' \
+            f'&action=getPrices' \
+            f'&service={SERVICE}' \
+            f'&country={COUNTRY}'
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # Проверка наличия ошибок в ответе
     print(response.text)
+except requests.exceptions.RequestException as e:
+    print(f"Ошибка запроса: {e}")
